@@ -1,0 +1,41 @@
+const mysql = require('mysql');
+
+var connection = mysql.createConnection({
+	host:'localhost',
+	user:'root',
+	password:'yzh18a701',
+	port:'3307',
+	database:'test'
+});
+
+connection.connect();
+
+
+class Article{
+	static all(cb){
+		connection.query('SELECT * FROM articles',cb);
+		//connection.end();
+	}
+
+	static find(id,cb){
+		connection.query('SELECT * FROM articles WHERE id = ?',id,cb);
+		//connection.end();
+	}
+
+	static create(data,cb){
+		const sql = 'INSERT INTO articles(title,content) VALUES(?,?)';
+		connection.query(sql,data,cb);
+		//connection.end();
+	}
+
+	static _delete(id,cb){
+		if(!id)return cb(new Error('Please provide an id'));
+		connection.query('DELETE FROM articles WHERE id = ?',id,cb);
+		//connection.end();
+	}
+}
+
+
+
+//module.exports = db;
+module.exports.Article = Article;

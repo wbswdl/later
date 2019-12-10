@@ -1,0 +1,4 @@
+<% include head %>
+<h1><%= article.title %></h1>
+<%= article.content %>
+<% include foot %>
